@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Minefinder</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <style>
+  body{
+      font-family: "Military";
+      font-size: 10vh;
+
+
+  }
+
+  .controls{
+    font-size:3vh;
+  }
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto auto auto auto;
+  grid-gap: 10px;
+  padding: 10px;
+  background-color: white;
+  width: 50vw;
+}
+
+@font-face{
+  font-family: "Military";
+  src: url("Stencil Cargo Army.ttf");
+}
+
+
+
+
+.container > div {
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  padding: 20px 0;
+  font-size: 30px;
+  height: 2.5vh;
+  width: 5vw;
+}
+
+
+
+
+      </style>
+  </head>
+  <body>
+<center><p>Minefinder</p></center>
+<center><div id = "timeboy"></div></center>
+<center><div class = "container" id = "board_container"> </div></center>
+<center><p class = "controls">Ctrl+Left Click to place a flag</p></center>
+  
+
+
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="http://another-domain.com/app.js" crossorigin="anonymous"></script>
+    <script>
+   var first_round = true;
+   var arr = [[],[],[],[],[],[],[],[],[]];
+   var bombCount = 10;
+   var bombsTouch = 0;
+   var revealed = [[],[],[],[],[],[],[],[],[]];
+   var allZeroes = false;
+   var numRevealed = 0;
+   var lose = false;
+   var keys = [];
+   var flagged = [[],[],[],[],[],[],[],[],[]];
+   var firstGame = true;
+   var startGame;
+   var time = 0;
+
+   
+   //recursion(1);
+    $("body").on("keydown",input);
+
+    
+
+      for(var x=0;x<9;x++){
+        for(var y= 0; y<9;y++){
+        $("#board_container").append("<div id = 'item" +(y+10*x)+"' onclick = 'game("+x+","+y+")'></div>");
+       
+      }
+      }
+
+for(var i =0;i<9;i++){
+  for(var j = 0; j<9;j++){
+    arr[i][j]="hi";
+  }
+}
+window.addEventListener('keydown', function (e) {
+            
+            if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+          e.preventDefault();
+            }
+            keys = (keys || []);
+            keys[e.keyCode] = true;
+            input();
+
+        });
+  window.addEventListener('keyup', function (e) {
+            keys[e.keyCode] = false;  
+            stop_player();
+        });
+
+function setBoxes(){
+  while(bombCount>0){
+  for(var i=0;i<arr.length;i++){
+    for(var j=0;j<arr[0].length;j++){
+      if(Math.floor(Math.random()*10)==1&&bombCount>0&&arr[i][j]=="hi"){
+        arr[i][j]="B";
+        bombCount--;
+      }
+    }
+  }
+  
+  }
+  
+  for(var i = 0;i<arr.length;i++){
+    for(var j=0;j<arr[0].length;j++){
+      if(firstGame&&arr[i][j]!="B"){
+       $("#item"+(10*i+j)).css({"background-color":"green"});
+      }
+
+      bombsTouch = 0;
+    if(j==0){
+    if(arr[i][j+1]=="B"){
+      bombsTouch++;
+    }
+    if(i!=0&&i!=arr.length-1){
+      if(arr[i-1][j]=="B"){
+      bombsTouch++;
+      }
+      if(arr[i+1][j]=="B"){
+      bombsTouch++;
+      }
+      if(arr[i+1][j+1]=="B"){
+      bombsTouch++;
+      }
+      if(arr[i-1][j+1]=="B"){
+        bombsTouch++;
+      }
+    }
+    if(i==0){
+      if(arr[i+1][j]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i+1][j+1]=="B"){
+        bombsTouch++;
+      }
+    }
+    if(i==arr.length-1){
+      if(arr[i-1][j]=="B"){
+        bombsTouch++;
+      }
+
+      if(arr[i-1][j+1]=="B"){
+        bombsTouch++;
+      }
+
+    }
+  }
+
+else if(j==arr[0].length-1){
+    if(arr[i][j-1]=="B"){
+      bombsTouch++;
+    }
+    if(i!=0&&i!=arr.length-1){
+      if(arr[i-1][j]=="B"){
+        bombsTouch++;
+      }
+     if(arr[i+1][j]=="B"){
+       bombsTouch++;
+     }
+      if(arr[i+1][j-1]=="B"){
+        bombsTouch++;
+    }
+      if(arr[i-1][j-1]=="B"){
+        bombsTouch++;
+      }
+    }
+    if(i==0){
+      if(arr[i+1][j]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i+1][j-1]=="B"){
+        bombsTouch++;
+      }
+    }
+    if(i==arr.length-1){
+      if(arr[i-1][j]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i-1][j-1]=="B"){
+        bombsTouch++;
+      }
+    }
+  }
+
+else if(i==arr.length-1){
+    if(arr[i-1][j]=="B"){
+      bombsTouch++;
+    }
+    if(j!=0&&j!=arr[0].length-1){
+      if(arr[i-1][j-1]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i-1][j+1]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i][j+1]=="B"){
+        bombsTouch++;
+      }
+      if(arr[i][j-1]=="B"){
+        bombsTouch++;
+      }
+    }
+  }
+else if(i==0){
+  if(arr[i+1][j]=="B"){
+    bombsTouch++;
+  }
+  if(j!=0&&j!=arr[0].length-1){
+    if(arr[i+1][j-1]=="B"){
+      bombsTouch++;
+    }
+    if(arr[i+1][j+1]=="B"){
+      bombsTouch++;
+    }
+    if(arr[i][j+1]=="B"){
+      bombsTouch++;
+    }
+    if(arr[i][j-1]=="B"){
+      bombsTouch++;
+    }
+  }
+}
+else{
+  if(arr[i-1][j]=="B"){
+    bombsTouch++;
+  }
+  if(arr[i+1][j]=="B"){
+    bombsTouch++;
+  }
+  if(arr[i+1][j+1]=="B"){
+    bombsTouch++;
+  }
+  if(arr[i-1][j+1]=="B"){
+    bombsTouch++;
+  }
+
+  if(arr[i][j+1]=="B"){
+    bombsTouch++;
+  }
+  if(arr[i][j-1]=="B"){
+    bombsTouch++;
+  }
+
+  if(arr[i-1][j-1]=="B"){
+    bombsTouch++;
+  }
+  if(arr[i+1][j-1]=="B"){
+    bombsTouch++;
+  }
+
+
+}
+if(arr[i][j]!="B"){
+  arr[i][j]=String(bombsTouch);
+   
+     }
+      }
+
+  }
+ 
+}
+
+function game(y,x){
+  if(first_round){
+    initialize(y,x);
+  }
+  if(keys[17]){
+    revealSquares(y,x,true);
+  }
+  else{
+  revealSquares(y,x,false);
+  }
+  if(numRevealed>=71&&!lose){
+    clearInterval(startGame);
+    alert("You Won! Press Enter to Restart");
+    
+    lose=true;
+  }
+}
+
+function initialize(y,x){
+  startGame = setInterval(timer,1000);
+  arr[y][x]=0;
+  firstClick(y,x);
+  setBoxes();
+  console.log(arr);
+  first_round = false;
+  
+
+}
+function timer(){
+  if(!lose){
+  time+=1;
+  }
+  $("#timeboy").empty();
+  $("#timeboy").html(time);
+
+
+  
+}
+function input(event){
+      if(event.which==13&&lose){
+        firstGame = false;
+        restart();
+      }
+
+    }
+
+      </script>
+
+  </body>
+</html>
