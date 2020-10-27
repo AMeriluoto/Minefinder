@@ -3,4 +3,6 @@ I wrote this project in high school for my AP CS Principles final. It is a delib
 
 Because of the lack of documentation and poor layout, this project serves as a reminder on the types of practices I need to avoid in the future. 
 
+I highlighted the solutions in green for the first game for the sake of demonstration. 
+
 The game can be accessed here: https://minesweeper-1.anttimeriluoto.repl.co/
