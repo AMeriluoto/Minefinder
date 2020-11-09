@@ -1,7 +1,5 @@
 # Minefinder
-I wrote this project in high school for my AP CS Principles final. It is a deliberate rip off of Minesweeper that I wrote purely to see if I could replicate it. 
-
-Because of the lack of documentation, poor layout, and... interesting... variable name choices, this project serves as a reminder of the types of practices I need to avoid in the future. 
+I wrote this project during my junior year of high school. It is a version of Minesweeper that I wrote to see if I could replicate it. 
 
 I highlighted the solutions in green for the first game for the sake of demonstration. 
 
