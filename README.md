@@ -3,4 +3,4 @@ I wrote this project during my junior year of high school. It is a version of Mi
 
 I highlighted the solutions in green for the first game for the sake of demonstration. 
 
-The game can be accessed here: https://Minefinder.anttimeriluoto1.repl.co
+The game can be accessed here: https://Minefinder.anttimeriluoto.repl.co
